@@ -1,25 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+  <meta charset="UTF-8">
   <title>SIGIAT</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#ffffff">
+
+  <style>
+    /* Menghilangkan margin default dan scrollbar di layer utama */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden; /* Mencegah halaman utama scroll */
+      background-color: #ffffff;
+    }
+
+    iframe {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
 </head>
 <body>
+
   <iframe 
     src="https://script.google.com/macros/s/AKfycbz3MCyuyG3vucz6liKLhYGcBYUrBdmGh68AX16WskHQ3kGffUVhaDFQpM-mN5-oIElx2A/exec"
-    width="100%"
-    height="100%"
-    allowfullscreen="true"
-    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;">
+    allow="geolocation; microphone; camera">
   </iframe>
 
   <script>
-    window.onload = function() {
-      document.querySelector('iframe')
-        .requestFullscreen()
-        .catch((err) => {
-          console.error('Error attempting to enable full-screen mode:', err.message);
-        });
-    };
+    // Daftarkan service worker agar tombol 'Install' muncul di Chrome
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(function(err) {
+        console.log('Service Worker registration failed: ', err);
+      });
+    }
   </script>
 </body>
 </html>
